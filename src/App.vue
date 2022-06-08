@@ -1,27 +1,24 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <!--<HelloWorld msg="Hello Vue 3 in CodeSandbox!" />-->
   <div class="d-flex flex-column justify-content-center">
+    <router-link to="/">Hello World</router-link>
+    <router-link to="/shopping-list">Shopping list</router-link>
+    <router-link to="/answer-questions">Answer Questions</router-link>
     <!--<div class="p-2">
       <Test />
     </div>-->
-    <div class="p-2">
+    <!--<div class="p-2">
       <FruitsList />
-    </div>
+    </div>-->
+  </div>
+  <div class="container">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-// import Test from "./components/Test.vue";
-import FruitsList from "./components/FruitsList.vue";
 export default {
   name: "App",
-  components: {
-    HelloWorld,
-    // Test,
-    FruitsList,
-  },
 };
 </script>
 

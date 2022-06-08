@@ -1,15 +1,23 @@
 <template>
   <form class="d-flex flex-column" @submit.prevent="add">
     <div class="d-flex align-items-center justify-content-around">
-      <label ref="label1" for="label-fruit">Add a fruit</label>
+      <label ref="label1" for="label-fruit">Add a something</label>
     </div>
     <div class="d-flex flex-row justify-content-center">
       <input v-model="newFruit" type="text" />
-      <button class="btn btn-success" type="submit">Add Fruit</button>
+      <button class="btn btn-success" type="submit">Add</button>
+    </div>
+    <div class="m-4 d-flex flex-row justify-content-center">
+      <input
+        debounce="500"
+        placeholder="Search"
+        v-model="searchText"
+        type="text"
+      />
     </div>
   </form>
 
-  <h2>A list of fruits I will buy:</h2>
+  <h2>Shopping list:</h2>
   <ul style="list-style: none">
     <li v-for="fruit in filteredFruits" track-by="id" :key="fruit.id">
       <FruitItem :item="fruit" @remove="remove" />
@@ -26,7 +34,7 @@
     {{ hideBought ? "Show all" : "Hide Bought" }}
   </button>
   <button class="btn btn-warning w-50" @click="desc = !desc">
-    {{ desc ? "Desc" : "Asc" }}
+    {{ !desc ? "Desc" : "Asc" }}
   </button>
 </template>
 
@@ -68,6 +76,7 @@ export default {
           name: this.newFruit,
         });
         this.setItems();
+        this.newFruit = "";
       }
     },
     remove(fruit) {
@@ -90,6 +99,12 @@ export default {
   computed: {
     filteredFruits() {
       let temp = this.list;
+
+      if (this.searchText.trim() !== "") {
+        temp = temp.filter((f) =>
+          f.name.toLowerCase().includes(this.searchText.toLowerCase())
+        );
+      }
 
       if (this.hideBought) {
         temp = temp.filter((fruit) => !fruit.buy);
