@@ -8,12 +8,7 @@
       <button class="btn btn-success" type="submit">Add</button>
     </div>
     <div class="m-4 d-flex flex-row justify-content-center">
-      <input
-        debounce="500"
-        placeholder="Search"
-        v-model="searchText"
-        type="text"
-      />
+      <input placeholder="Search" v-model="searchText" type="text" />
     </div>
   </form>
 

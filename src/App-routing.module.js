@@ -15,6 +15,10 @@ const routes = [
   {
     path: "/answer-questions",
     component: Test
+  },
+  {
+    path: "/todo-list",
+    component: () => import("./components/TodoList.vue")
   }
 ];
 
