@@ -61,12 +61,12 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../../src/http-common";
 export default {
   name: "TodoList",
   data() {
     return {
-      url: "https://jsonplaceholder.typicode.com/posts",
+      url: "/posts",
       list: [],
       status: 0,
       show: false,
@@ -123,8 +123,10 @@ export default {
     async updatePost(post) {
       const { id, ...rest } = post;
       try {
-        await axios.put(`${this.url}/${id}`, rest);
+        const res = await axios.put(`${this.url}/${id}`, rest);
         this.reset();
+        this.addUpdate(res.data);
+        //this.getList();
         window.alert("Post Updated!");
       } catch (err) {
         this.status = 3;
@@ -133,8 +135,10 @@ export default {
     },
     async createPost(post) {
       try {
-        await axios.post(this.url, post);
+        const res = await axios.post(this.url, post);
         this.reset();
+        this.addPostFirst(res.data);
+        //this.getList();
         window.alert("Post Created!");
       } catch (err) {
         this.status = 3;
@@ -162,7 +166,6 @@ export default {
       } else {
         this.createPost(this.newPost);
       }
-      this.getList();
     },
 
     isInvalidForm() {
@@ -172,6 +175,17 @@ export default {
     edit(post) {
       this.newPost = { ...post };
       this.show = !this.show;
+    },
+    addPostFirst(post) {
+      console.log(post);
+      this.list.splice(0, 0, post);
+    },
+    addUpdate(post) {
+      const updated = this.list.findIndex((p) => p.id === post.id);
+      console.log(post, updated);
+      this.list[updated] = {
+        ...post,
+      };
     },
   },
 };

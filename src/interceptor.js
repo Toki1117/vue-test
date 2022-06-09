@@ -1,6 +1,6 @@
-import axios from "axios";
+import http from "./http-common";
 
-axios.interceptors.request.use(
+http.interceptors.request.use(
   (config) => {
     console.log(config);
     // let token = localStorage.getItem('authtoken');
@@ -8,7 +8,7 @@ axios.interceptors.request.use(
     //   if (token) {
     //     config.headers['Authorization'] = `Bearer ${ token }`;
     //   }
-    config.headers["Authorization"] = `Bearer ${23123123123}`;
+    config.headers.test = `Bearer TESTING`;
     return config;
   },
   (error) => {
